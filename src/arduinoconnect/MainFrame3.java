@@ -25,6 +25,7 @@ import javax.print.attribute.standard.MediaPrintableArea;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.print.attribute.standard.PrintQuality;
 import javax.print.attribute.standard.PrinterResolution;
+import javax.swing.ImageIcon;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -157,7 +158,13 @@ public class MainFrame3 extends javax.swing.JFrame implements SerialPortEventLis
                                         code.append(month);
                                     code.append(year);
                                     code.delete(4,6);
-                                    code.append(hour);
+                                    if(hour/10<1)
+                                    {
+                                        code.append("0");
+                                        code.append(hour);
+                                    }
+                                    else
+                                        code.append(hour);
                                     if(min/10<1)
                                     {
                                         code.append("0");
@@ -168,7 +175,11 @@ public class MainFrame3 extends javax.swing.JFrame implements SerialPortEventLis
             
                                     String code1;
                                     code1= code.toString();
-                                    Lsignal.setText(code1);
+                                    //Lsignal.setText(code1);
+                                    
+                                    ImageIcon iconLogo = new ImageIcon(path);
+                                    Lsignal.setText("");
+                                    Lsignal.setIcon(iconLogo);
                                     code.delete(0,11);
                                     System.out.println(code);
                                     Code128 barcode = new Code128();             //Barcode Type
@@ -190,7 +201,10 @@ public class MainFrame3 extends javax.swing.JFrame implements SerialPortEventLis
                             }
 			} catch (Exception e) {
 				System.err.println(e.toString());
-			}
+			} finally {
+                            Lsignal.setIcon(null);
+                            Lsignal.setText("No Input");
+                        }
 		}
 		// Ignore all the other eventTypes, but you should consider the other ones.
 	}
@@ -288,25 +302,33 @@ public class MainFrame3 extends javax.swing.JFrame implements SerialPortEventLis
         gridBagConstraints.insets = new java.awt.Insets(18, 44, 0, 0);
         jPanel1.add(jLabel4, gridBagConstraints);
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
-
         Lsignal.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lsignal.setText("No Signal");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(89, 296, 0, 0);
-        jPanel2.add(Lsignal, gridBagConstraints);
+        Lsignal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Lsignal.setText("No Input");
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 2, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Made by: Shashank Singh, Rahul Gour, Shivam Singh and Ashutosh Paliwal");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(111, 273, 0, 0);
-        jPanel2.add(jLabel1, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(221, 221, 221)
+                .addComponent(Lsignal, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(265, 265, 265)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(Lsignal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(107, 107, 107)
+                .addComponent(jLabel1))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
